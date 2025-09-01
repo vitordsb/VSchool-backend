@@ -1,6 +1,7 @@
 const express = require("express");
 const Roadmap = require("../models/Roadmap");
 const Module = require("../models/Module");
+const User = require("../models/User");
 const { auth, adminAuth } = require("../middleware/auth");
 
 const router = express.Router();
