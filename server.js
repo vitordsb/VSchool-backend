@@ -6,13 +6,7 @@ require("dotenv").config();
 
 const app = express();
 // Middleware
-app.use(
-  cors({
-    origin: "https://vschool-five.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  }),
-);
+app.use(cors());
 app.use(express.json());
 
 // Conectar ao MongoDB
