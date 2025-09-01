@@ -114,8 +114,6 @@ router.get("/:id", auth, async (req, res) => {
     if (!roadmap) {
       return res.status(404).json({ message: "Roadmap não encontrado" });
     }
-
-    // Verificar se o usuário tem acesso ao roadmap
     if (
       roadmap.owner_id._id.toString() !== req.user._id.toString() &&
       req.user.role !== "admin"
@@ -155,13 +153,10 @@ router.get("/shared/:sharedUrl", async (req, res) => {
 router.put("/:id", auth, async (req, res) => {
   try {
     const { title, description, is_public } = req.body;
-
     const roadmap = await Roadmap.findById(req.params.id);
     if (!roadmap) {
       return res.status(404).json({ message: "Roadmap não encontrado" });
     }
-
-    // Verificar se o usuário tem permissão para editar
     if (
       roadmap.owner_id.toString() !== req.user._id.toString() &&
       req.user.role !== "admin"
@@ -188,21 +183,14 @@ router.delete("/:id", auth, async (req, res) => {
     if (!roadmap) {
       return res.status(404).json({ message: "Roadmap não encontrado" });
     }
-
-    // Verificar se o usuário tem permissão para deletar
     if (
       roadmap.owner_id.toString() !== req.user._id.toString() &&
       req.user.role !== "admin"
     ) {
       return res.status(403).json({ message: "Acesso negado" });
     }
-
-    // Deletar módulos relacionados
     await Module.deleteMany({ roadmap_id: req.params.id });
-
-    // Deletar roadmap
     await Roadmap.findByIdAndDelete(req.params.id);
-
     res.json({ message: "Roadmap deletado com sucesso" });
   } catch (error) {
     console.error(error);
