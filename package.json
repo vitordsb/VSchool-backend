@@ -7,6 +7,7 @@
     "dev": "nodemon server.js",
     "create-student": "node scripts/createStudent.js",
     "create-admin": "node scripts/createAdmin.js",
+    "delete-admin": "node scripts/deleteAdmin.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
