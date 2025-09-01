@@ -92,6 +92,16 @@ router.get("/", auth, async (req, res) => {
     res.status(500).json({ message: "Erro interno do servidor" });
   }
 });
+//obter todos os roadmaps publicos e privados para adm
+router.get("/getall", adminAuth, async (req, res) => {
+  try {
+    const roadmaps = await Roadmap.find().populate("owner_id", "username");
+    res.json(roadmaps);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erro interno do servidor" });
+  }
+});
 
 // Obter roadmap específico
 router.get("/:id", auth, async (req, res) => {
